@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>💘 Pregunta importante 💘</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(180deg, #ff5f8a, #3b0015);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: #333;
+    }
+
+    .card {
+      background: #fff2ea;
+      padding: 40px 30px;
+      border-radius: 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+      animation: pop 1s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 120px;
+    }
+
+    button {
+      padding: 14px 24px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform .2s;
+    }
+
+    #yes {
+      background: #ff3366;
+      color: white;
+    }
+
+    #yes:hover {
+      transform: scale(1.1);
+    }
+
+    #no {
+      background: #ddd;
+      position: absolute;
+      left: 60%;
+      top: 0;
+    }
+
+    .final {
+      display: none;
+      animation: pop 1s ease;
+    }
+
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      color: red;
+      font-size: 20px;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      from { transform: translateY(-20px); opacity: 1; }
+      to { transform: translateY(100vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card" id="question">
+  <h1>💘 Oye señorita Eveline…</h1>
+  <p>¿Quieres ser mi San Valentín? 💕</p>
+
+  <div class="buttons">
+    <button id="yes">Sí 💖</button>
+    <button id="no">No 😐</button>
+  </div>
+</div>
+
+<div class="card final" id="final">
+  <h1>🥰 SABÍA QUE DIRÍAS QUE SÍ 🥰</h1>
+  <p>Te quiero muchísimo ❤️</p>
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<script>
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const question = document.getElementById("question");
+  const final = document.getElementById("final");
+  const hearts = document.getElementById("hearts");
+
+  const noTexts = [
+    "¿Segura? 😏",
+    "Piénsalo bien 👀",
+    "Ey 😳",
+    "No puedes 😈",
+    "JAJA casi 😂",
+    "Inténtalo otra vez 😜"
+  ];
+
+  let tries = 0;
+
+  function moveNo() {
+    tries++;
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 80;
+
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    noBtn.textContent = noTexts[tries % noTexts.length];
+  }
+
+  noBtn.addEventListener("mouseenter", moveNo);
+  noBtn.addEventListener("click", moveNo);
+
+  yesBtn.addEventListener("click", () => {
+    question.style.display = "none";
+    final.style.display = "block";
+    launchHearts();
+  });
+
+  function launchHearts() {
+    setInterval(() => {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = "❤️";
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.animationDuration = (2 + Math.random() * 3) + "s";
+      hearts.appendChild(h);
+      setTimeout(() => h.remove(), 5000);
+    }, 200);
+  }
+</script>
+
+</body>
+</html>
